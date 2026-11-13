@@ -83,7 +83,7 @@ No, ya que tiene el registro A de mail.fazbear.com, que indica la IP del servido
 
 | N° | Síntoma observado | Cómo la encontraron | Dispositivo y configuración incorrecta | Corrección aplicada |
 |---|---|---|---|---|
-| 1 |  |  |  |  |
+| 1 | DNS incorrecto en Boleteria | Pingeando la web directamente con su direccion desde Boleteria y luego con `nslookup` sin exito | TODO: Probablemente es R Atraccion, habria que ver pero no estoy pensando mucho XD |  |
 | 2 |  |  |  |  |
 | 3 |  |  |  |  |
 | 4 |  |  |  |  |
