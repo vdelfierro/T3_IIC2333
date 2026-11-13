@@ -83,11 +83,11 @@ No, ya que tiene el registro A de mail.fazbear.com, que indica la IP del servido
 
 | N° | Síntoma observado | Cómo la encontraron | Dispositivo y configuración incorrecta | Corrección aplicada |
 |---|---|---|---|---|
-| 1 | DNS incorrecto en Boleteria | Pingeando la web directamente con su direccion desde Boleteria y luego con `nslookup` sin exito | TODO: Probablemente es R Atraccion, habria que ver pero no estoy pensando mucho XD |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
-| 4 |  |  |  |  |
-| 5 |  |  |  |  |
+| 1 | DNS incorrecto (10.30.0.20) en PCs de Boleteria | Pingeando la web directamente con su direccion desde Boleteria y luego con `nslookup` sin exito | Configuración DHCP en R-Atraccion | Corregida la configuración de DHCP en R-Atraccion para entregar el servidor DNS correcto (10.30.0.2) |
+| 2 | Dirección IP de fazbearsfright.com incorrecta en DNS (10.30.0.30) | Intentado hacer Ping a www.fazbearsfright.com, la consola muestra una IP que no corresponde a la del servidor  | Dirección incorrecta en Servidor DNS | Se asigna la dirección IP que corresponde (10.30.0.3) al servidor web en el servidor DNS |
+| 3 | Los computadores de boletería pueden acceder al servidor de registros | Se generan pings exitosos en la IP del servidor de registros (10.30.0.4) desde ambos PCs de boletería | Firewall del server de registros | Se modificó la regla de Deny para la subred de 192.168.33.0 para que se excluya a los PCs de boletería  |
+| 4 | La PC de Seguridad no puede acceder a los servidores | Se generan timeouts al hacer ping a los servidores de DNS, Web y de los Registros | Direccionamiento del Router de Servidores | Se añade la ruta de retorno desde (192.168.34.0) hacia (10.255.0.1) en la configuración del router |
+| 5 | El Gateway de PC Técnico está mal asignado a la última dirección disponible (10.30.0.254) | Revisando los Gateways de todos los dispositivos en la red, El del PC Técnico no cuadraba con la del resto de dispositivos (10.30.0.1) | Gateway PC Técnico | Se asigna la primera Dirección de la subred al Gateway (10.30.0.1) |
 
 ---
 
