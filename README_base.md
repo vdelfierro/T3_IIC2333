@@ -20,13 +20,6 @@ Indiquen las direcciones que eligieron para los enlaces entre routers.
 | R-Oficina ↔ R-HQ | 10.0.0.0/30 (255.255.255.252) | 10.0.0.1 | 10.0.0.2 |
 | R-HQ ↔ R-Pizzaplex | 10.0.0.4/30 (255.255.255.252) | 10.0.0.5 | 10.0.0.6 |
 
-
-### Consideraciones
-
-_(Opcional. Cualquier cosa que el ayudante deba saber al corregir su red.)_
-
----
-
 ## Parte 2: Simulación en la red de Fazbear Entertainment
 
 ### 2.1
@@ -86,7 +79,7 @@ No, ya que tiene el registro A de mail.fazbear.com, que indica la IP del servido
 | 1 | DNS incorrecto (10.30.0.20) en PCs de Boleteria | Pingeando la web directamente con su direccion desde Boleteria y luego con `nslookup` sin exito | Configuración DHCP en R-Atraccion | Corregida la configuración de DHCP en R-Atraccion para entregar el servidor DNS correcto (10.30.0.2) |
 | 2 | Dirección IP de fazbearsfright.com incorrecta en DNS (10.30.0.30) | Intentado hacer Ping a www.fazbearsfright.com, la consola muestra una IP que no corresponde a la del servidor  | Dirección incorrecta en Servidor DNS | Se asigna la dirección IP que corresponde (10.30.0.3) al servidor web en el servidor DNS |
 | 3 | Los computadores de boletería pueden acceder al servidor de registros | Se generan pings exitosos en la IP del servidor de registros (10.30.0.4) desde ambos PCs de boletería | Firewall del server de registros | Se modificó la regla de Deny para la subred de 192.168.33.0 para que se excluya a los PCs de boletería  |
-| 4 | La PC de Seguridad no puede acceder a los servidores | Se generan timeouts al hacer ping a los servidores de DNS, Web y de los Registros | Direccionamiento del Router de Servidores | Se añade la ruta de retorno desde (192.168.34.0) hacia (10.255.0.1) en la configuración del router |
+| 4 | La PC de Seguridad no puede acceder a los servidores | Se generan timeouts al hacer ping a los servidores de DNS, Web y de los Registros | Tabla de Direccionamiento CEF del Router de Servidores | Se añade la ruta de retorno desde (192.168.34.0) hacia (10.255.0.1) en la configuración del router |
 | 5 | El Gateway de PC Técnico está mal asignado a la última dirección disponible (10.30.0.254) | Revisando los Gateways de todos los dispositivos en la red, El del PC Técnico no cuadraba con la del resto de dispositivos (10.30.0.1) | Gateway PC Técnico | Se asigna la primera Dirección de la subred al Gateway (10.30.0.1) |
 
 ---
@@ -96,29 +89,31 @@ No, ya que tiene el registro A de mail.fazbear.com, que indica la IP del servido
 ### 4.1
 
 **Dispositivo donde se descarta el paquete:**
-
+[En el Servidor de Registro]
 **Capa del modelo OSI:**
-
+[Layer 3: Red IP]
 **IP de origen observada:**
-
-**¿Por qué el paquete coincide con la regla del firewall (dirección y wildcard)?**
+[192.168.33.3]
+**¿Por qué el paquete coincide con la regla del firewall (dirección y wildcard)?:**
+Porque forma parte de la subred 192.168.33.XXX, todas las IPs de dispositivos provenientes desde esa subred son bloqueadas por el wildcard (0.0.0.255)
 
 ### 4.2
 
-**¿Llega el echo request al Servidor Web?**
-
+**¿Llega el echo request al Servidor Web?:**
+ No llega
 **Dispositivo donde se pierde el paquete y por qué:**
-
+Se pierde en el Router de Atracciones, No encuentra la dirección de destino en la tabla CEF
 **Falla relacionada (N° de su tabla):**
-
+ 4, No se encontró la dirección por estar ausente también la dirección de retorno en el router de Servidores
+ 
 ### 4.3
 
 **IP a la que se envía la consulta DNS:**
-
+ Se envía a 10.30.0.20
 **Dispositivo hasta donde llega:**
-
-**¿Por qué nunca obtiene respuesta?**
-
+ Al no existir la dirección en la tabla de direcciones, solo llega al router de servidores antes de ser descartado
+**¿Por qué nunca obtiene respuesta?:**
+Porque el paquete nunca llegó a su destino
 ### 4.4
 
 **Fallas que producen el mismo síntoma (N° de su tabla):**
